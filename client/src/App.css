@@ -10,8 +10,13 @@
 :root {
   --color-navbar: #404041;
   --color-white: #fff;
+  --color-primary: #ff9926;
+  --color-body-background: #f0f0f0;
 }
 
+body {
+  background: var(--color-body-background);
+}
 .navContainer {
   background: var(--color-navbar);
   display: flex;
@@ -85,4 +90,155 @@
   font-size: 16px;
   line-height: 19px;
   color: var(--color-white);
+}
+
+/* Header Container */
+.adminDashboardContainer {
+  margin: 1rem 1rem;
+}
+
+.adminDashboardWrapper {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #c7c7c8;
+  margin: 1rem 1rem;
+  padding: 1rem;
+}
+.headerSelectContianer {
+  display: flex;
+  align-items: center;
+  padding: 0px;
+  gap: 14px;
+}
+
+.inventoryText {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 34px;
+  line-height: 40px;
+  /* identical to box height */
+}
+.headerInputContainer {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 12px;
+  isolation: isolate;
+
+  width: 320px;
+  height: 40px;
+
+  border: 1px solid var(--color-primary);
+
+  background: var(--color-white);
+  border-radius: 5px;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  padding: 0px;
+  gap: 20px;
+}
+
+.dealerText {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 143%;
+  /* identical to box height, or 23px */
+  letter-spacing: 0.17px;
+
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.filterText {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 36px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 1.25px;
+  text-transform: uppercase;
+}
+
+.headerFilterContianer {
+  display: flex;
+
+  align-items: center;
+  padding: 0px;
+  gap: 14px;
+}
+
+/* Recent Wrapper*/
+
+.recentWrapper {
+  margin: 2rem;
+}
+
+.recentText {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 143%;
+  /* identical to box height, or 23px */
+  letter-spacing: 0.17px;
+
+  color: rgba(0, 0, 0, 0.87);
+}
+
+/* Data Number Container*/
+
+.dataNumberContainer {
+  display: flex;
+
+  align-items: flex-start;
+  padding: 0px;
+  gap: 20px;
+}
+
+/*Data Box Container */
+.dataNumberContainer {
+  margin: 2rem;
+}
+.databox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 25px 24px;
+  gap: 5px;
+
+  width: 178px;
+  height: 113px;
+
+  background: var(--color-white);
+  border-radius: 5px;
+}
+
+.dataBoxHeader {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 28px;
+
+  color: #000000;
+}
+
+.dataBoxFooter {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+
+  color: var(--color-primary);
 }
