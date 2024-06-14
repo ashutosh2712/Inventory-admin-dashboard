@@ -1,0 +1,88 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  list-style: none;
+  text-decoration: none;
+}
+
+:root {
+  --color-navbar: #404041;
+  --color-white: #fff;
+}
+
+.navContainer {
+  background: var(--color-navbar);
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 35px;
+}
+
+.navLeft {
+  display: flex;
+
+  align-items: center;
+  padding: 0px;
+  gap: 11px;
+}
+.dasboardTitle {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 23px;
+  color: var(--color-white);
+}
+
+.logoTag {
+  padding: 3px 7px;
+  background: var(--color-white);
+  border-radius: 29px;
+}
+
+.navRight {
+  display: flex;
+
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0px;
+  gap: 10px;
+}
+.supportText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 7px;
+  gap: 8px;
+}
+
+.supportFont {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+
+  color: rgba(255, 255, 255, 0.87);
+}
+
+.adminProfile {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+  background: #242424;
+  border-radius: 5px;
+}
+
+.profileText {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: var(--color-white);
+}
