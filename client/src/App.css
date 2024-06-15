@@ -303,17 +303,56 @@ body {
 .inventoryGraphPlot,
 .moneyDataGraphPlot {
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   padding: 1rem;
   gap: 44px;
 
-  width: max-content;
+  width: 1200px;
+  /* width: max-content; */
   height: 474px;
 
   /* Shadow 1 */
   filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.1));
 
+  background: var(--color-white);
+  border-radius: 5px;
+}
+
+/* Table Container */
+.dashboardTableContainer {
+  margin-left: 2rem;
+  margin-top: 2rem;
+}
+.dashboardTableHeader {
+  display: flex;
+  margin-bottom: 2rem;
+  align-items: center;
+  padding: 0px;
+  gap: 20px;
+}
+.dashboardTableHeaderText {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 143%;
+  letter-spacing: 0.17px;
+
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.dashboardTableBody {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  gap: 10px;
+
+  width: 1200px;
+  height: 462px;
+  filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.1));
   background: var(--color-white);
   border-radius: 5px;
 }

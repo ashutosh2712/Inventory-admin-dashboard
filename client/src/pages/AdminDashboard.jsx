@@ -2,6 +2,7 @@ import React from "react";
 import Vector from "../assets/Vector.png";
 import Filter from "../assets/filter.png";
 import DashboardGraph from "../components/DashboardGraph";
+import DashboardTable from "../components/DashboardTable";
 const AdminDashboard = () => {
   return (
     <div className="adminDashboardContainer">
@@ -61,6 +62,7 @@ const AdminDashboard = () => {
         </div>
       </div>
       <DashboardGraph />
+      <DashboardTable />
     </div>
   );
 };
