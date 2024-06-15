@@ -1,6 +1,7 @@
 import React from "react";
 import Vector from "../assets/Vector.png";
 import Filter from "../assets/filter.png";
+import DashboardGraph from "../components/DashboardGraph";
 const AdminDashboard = () => {
   return (
     <div className="adminDashboardContainer">
@@ -59,6 +60,7 @@ const AdminDashboard = () => {
           <p className="dataBoxFooter">CPO MSRP</p>
         </div>
       </div>
+      <DashboardGraph />
     </div>
   );
 };
