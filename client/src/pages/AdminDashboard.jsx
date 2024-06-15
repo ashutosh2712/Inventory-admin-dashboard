@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Vector from "../assets/Vector.png";
 import Filter from "../assets/filter.png";
 import DashboardGraph from "../components/DashboardGraph";
 import DashboardTable from "../components/DashboardTable";
+import FilterData from "../components/FilterData";
 const AdminDashboard = () => {
+  const [isFilterVisible, setIsFilterVisible] = useState(false);
+
+  const toggleFilterVisibility = () => {
+    setIsFilterVisible(!isFilterVisible);
+  };
   return (
     <div className="adminDashboardContainer">
       <div className="adminDashboardWrapper">
@@ -18,10 +24,14 @@ const AdminDashboard = () => {
               <img src={Vector} alt="upArrow" />
             </div>
           </div>
-          <div className="headerFilterContianer">
+          <button
+            className="headerFilterContianer"
+            onClick={toggleFilterVisibility}
+          >
             <img src={Filter} alt="filter" />
             <p className="filterText">Filter Data By</p>
-          </div>
+          </button>
+          <div>{isFilterVisible && <FilterData />}</div>
         </div>
       </div>
       <div className="recentWrapper">

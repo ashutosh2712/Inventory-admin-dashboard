@@ -18,6 +18,8 @@
 body {
   background: var(--color-body-background);
 }
+
+/* Nav Component */
 .navContainer {
   background: var(--color-navbar);
   display: flex;
@@ -96,6 +98,7 @@ body {
 /* Header Container */
 .adminDashboardContainer {
   margin: 1rem 1rem;
+  position: relative;
 }
 
 .adminDashboardWrapper {
@@ -355,4 +358,136 @@ body {
   filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.1));
   background: var(--color-white);
   border-radius: 5px;
+}
+
+/* Filter Container */
+.filterContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 30px;
+  gap: 25px;
+
+  position: absolute;
+  width: 520px;
+
+  top: 60px;
+  right: 0px;
+  z-index: 10;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: var(--color-white);
+}
+
+.filterHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px 0px 25px;
+  gap: 15px;
+  width: 480px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.filterHeaderText {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 34px;
+  line-height: 40px;
+
+  color: #000000;
+}
+
+.filterUpper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px 0px 20px;
+  width: 480px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.filterUpperHeader {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 36px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 1.25px;
+  text-transform: uppercase;
+  color: #000000;
+}
+
+.filterUpperHeaderField {
+  display: flex;
+  align-items: center;
+}
+
+.filterMid {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px 0px 20px;
+  width: 480px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.filterFooter {
+  display: flex;
+
+  align-items: flex-start;
+  padding: 0px;
+  gap: 25px;
+}
+
+.applyFilterBtn {
+  padding: 0px 16px;
+  gap: 16px;
+
+  width: 289px;
+  /* height: 44px; */
+
+  background: var(--color-primary-variant);
+  border-radius: 4px;
+
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 36px;
+  text-align: center;
+  letter-spacing: 1.25px;
+  text-transform: uppercase;
+
+  color: var(--color-white);
+}
+
+.removeFilterBtn {
+  display: flex;
+  align-items: center;
+  padding: 0px 16px;
+  gap: 16px;
+
+  width: 212px;
+  /* height: 44px; */
+
+  border: 2px solid var(--color-primary-variant);
+  border-radius: 4px;
+  background: var(--color-white);
+}
+
+.removeBtntext {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 36px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  text-transform: uppercase;
+
+  color: var(--color-primary-variant);
 }

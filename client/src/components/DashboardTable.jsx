@@ -123,7 +123,7 @@ const DashboardTable = () => {
           getRowId={(row) => row.id}
           sx={{
             border: "none",
-            fontSize: "12px",
+            fontSize: "14px",
             fontFamily: "Roboto",
             fontStyle: "normal",
             fontWeight: 500,
