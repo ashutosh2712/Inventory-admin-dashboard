@@ -2,6 +2,16 @@ import { Router } from "express";
 import fs from "fs";
 import path from "path";
 import csvParser from "csv-parser";
+import {
+  parse,
+  format,
+  subMonths,
+  subYears,
+  startOfMonth,
+  startOfYear,
+  endOfMonth,
+  endOfYear,
+} from "date-fns";
 
 const router = Router();
 
@@ -15,14 +25,73 @@ const router = Router();
 // ];
 
 router.get("/api/inventory", (request, response) => {
+  const { vehicleType, duration } = request.query;
   const inventories = [];
   const csvFilePath = path.resolve("src/sample-data-v2.csv");
 
   fs.createReadStream(csvFilePath)
     .pipe(csvParser())
-    .on("data", (data) => inventories.push(data))
+    .on("data", (data) => {
+      const date = data.timestamp.split(" ")[0];
+      inventories.push(data);
+    })
     .on("end", () => {
-      response.json(inventories);
+      let filteredInventories = inventories;
+
+      if (vehicleType) {
+        filteredInventories = filteredInventories.filter(
+          (item) => item.brand.toLowerCase() == vehicleType.toLocaleLowerCase()
+        );
+      }
+
+      const now = new Date();
+      switch (duration) {
+        case "last_month":
+          filteredInventories = filteredInventories.filter(
+            (item) =>
+              item.timestamp.split(" ")[0] >= subMonths(startOfMonth(now), 1) &&
+              item.timestamp.split(" ")[0] <= subMonths(endOfMonth(now), 1)
+          );
+          break;
+        case "this_month":
+          filteredInventories = filteredInventories.filter(
+            (item) =>
+              item.timestamp.split(" ")[0] >= startOfMonth(now) &&
+              item.timestamp.split(" ")[0] <= endOfMonth(now)
+          );
+          break;
+        case "last_3_month":
+          filteredInventories = filteredInventories.filter(
+            (item) =>
+              item.timestamp.split(" ")[0] >= subMonths(startOfMonth(now), 3) &&
+              item.timestamp.split(" ")[0] <= now
+          );
+          break;
+        case "last_6_month":
+          filteredInventories = filteredInventories.filter(
+            (item) =>
+              item.timestamp.split(" ")[0] >= subMonths(startOfMonth(now), 6) &&
+              item.timestamp.split(" ")[0] <= now
+          );
+          break;
+        case "this_year":
+          filteredInventories = filteredInventories.filter(
+            (item) =>
+              item.timestamp.split(" ")[0] >= startOfYear(now) &&
+              item.timestamp.split(" ")[0] <= now
+          );
+          break;
+        case "last_year":
+          filteredInventories = filteredInventories.filter(
+            (item) =>
+              item.timestamp.split(" ")[0] >= startOfYear(subYears(now, 1)) &&
+              item.timestamp.split(" ")[0] <= endOfYear(subYears(now, 1))
+          );
+          break;
+        default:
+          break;
+      }
+      response.json(filteredInventories);
     })
     .on("error", (error) => {
       console.log("Error reading the csv file:", error);
