@@ -1,7 +1,8 @@
 import express from "express";
-
+import inventoryRouter from "./routes/inventory.mjs";
 const app = express();
 
+app.use(inventoryRouter);
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
