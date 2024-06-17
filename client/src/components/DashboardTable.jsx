@@ -3,9 +3,10 @@ import { DataGrid } from "@mui/x-data-grid";
 import Papa from "papaparse";
 import { format, parse } from "date-fns";
 import axios from "axios";
+import { red } from "@mui/material/colors";
 const DashboardTable = () => {
   const [tableData, setTableData] = useState([]);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   useEffect(() => {
     const fetchInventoryTableData = async () => {
       try {
@@ -16,13 +17,18 @@ const DashboardTable = () => {
         if (response.data) {
           setTableData(response.data);
           console.log(response.data);
+          setError(null);
         } else {
           console.error("Response is Empty");
           setError("Response is Empty");
         }
       } catch (error) {
         console.error("Error loading table data", error);
-        setError(error);
+        const errorMessage =
+          error.response && error.response.data && error.response.data.error
+            ? error.response.data.error
+            : error.message;
+        setError(errorMessage);
       }
     };
     fetchInventoryTableData();
@@ -47,19 +53,23 @@ const DashboardTable = () => {
         <p className="dashboardTableHeaderText">History log</p>
       </div>
       <div className="dashboardTableBody">
-        <DataGrid
-          rows={tableData}
-          columns={columns}
-          getRowId={(row) => row.id}
-          sx={{
-            border: "none",
-            fontSize: "14px",
-            fontFamily: "Roboto",
-            fontStyle: "normal",
-            fontWeight: 500,
-          }}
-          pageSizeOptions={[5, 10, 50, { value: 100, label: "100" }]}
-        />
+        {error ? (
+          <p style={{ color: "red" }}>{error}</p>
+        ) : (
+          <DataGrid
+            rows={tableData}
+            columns={columns}
+            getRowId={(row) => row.id}
+            sx={{
+              border: "none",
+              fontSize: "14px",
+              fontFamily: "Roboto",
+              fontStyle: "normal",
+              fontWeight: 500,
+            }}
+            pageSizeOptions={[5, 10, 50, { value: 100, label: "100" }]}
+          />
+        )}
       </div>
     </div>
   );

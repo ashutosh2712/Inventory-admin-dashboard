@@ -97,7 +97,9 @@ router.get("/api/inventory", (request, response) => {
     })
     .on("error", (error) => {
       console.log("Error reading the csv file:", error);
-      response.status(500).json({ error: "Failed to read the csv file" });
+      response
+        .status(500)
+        .json({ error: "Failed to load data. Please try again later." });
     });
 });
 
@@ -132,6 +134,57 @@ router.get("/api/inventory/chart", (request, response) => {
       }, {});
 
       const formattedData = Object.values(groupedData);
+
+      response.json(formattedData);
+    })
+    .on("error", (error) => {
+      console.log("Error reading the csv file:", error);
+      response.status(500).json({ error: "Failed to read the CSV file" });
+    });
+});
+
+router.get("/api/inventory/MSRPchart", (request, response) => {
+  const MSRPChartData = [];
+  const csvFilePath = path.resolve("src/sample-data-v2.csv");
+
+  fs.createReadStream(csvFilePath)
+    .pipe(csvParser())
+    .on("data", (data) => {
+      MSRPChartData.push({
+        inventory_type: data.condition,
+        price: parseFloat(data.price.replace("USD", "")),
+        date: data.timestamp.split(" ")[0],
+      });
+    })
+    .on("end", () => {
+      const groupedData = MSRPChartData.reduce((acc, curr) => {
+        const { date, inventory_type, price } = curr;
+
+        if (!acc[date]) {
+          acc[date] = { date: date, inventory: {} };
+        }
+
+        if (!acc[date].inventory[inventory_type]) {
+          acc[date].inventory[inventory_type] = { totalPrice: 0, count: 0 };
+        }
+
+        acc[date].inventory[inventory_type].totalPrice += price;
+        acc[date].inventory[inventory_type].count += 1;
+
+        return acc;
+      }, {});
+
+      const formattedData = Object.values(groupedData).map((item) => {
+        const inventory = {};
+        Object.keys(item.inventory).forEach((type) => {
+          const { totalPrice, count } = item.inventory[type];
+          inventory[type] = parseInt((totalPrice / count).toFixed(2)); // Average price
+        });
+        return {
+          date: item.date,
+          inventory,
+        };
+      });
 
       response.json(formattedData);
     })
