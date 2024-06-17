@@ -40,57 +40,59 @@ router.get("/api/inventory", (request, response) => {
 
       if (vehicleType) {
         filteredInventories = filteredInventories.filter(
-          (item) => item.brand.toLowerCase() == vehicleType.toLocaleLowerCase()
+          (item) =>
+            item.product_type.toLowerCase() == vehicleType.toLocaleLowerCase()
         );
       }
 
       const now = new Date();
+      let dateRangeStart, dateRangeEnd;
+
       switch (duration) {
         case "last_month":
-          filteredInventories = filteredInventories.filter(
-            (item) =>
-              item.timestamp.split(" ")[0] >= subMonths(startOfMonth(now), 1) &&
-              item.timestamp.split(" ")[0] <= subMonths(endOfMonth(now), 1)
-          );
+          dateRangeStart = subMonths(startOfMonth(now), 1);
+          dateRangeEnd = subMonths(endOfMonth(now), 1);
           break;
         case "this_month":
-          filteredInventories = filteredInventories.filter(
-            (item) =>
-              item.timestamp.split(" ")[0] >= startOfMonth(now) &&
-              item.timestamp.split(" ")[0] <= endOfMonth(now)
-          );
+          dateRangeStart = startOfMonth(now);
+          dateRangeEnd = endOfMonth(now);
           break;
-        case "last_3_month":
-          filteredInventories = filteredInventories.filter(
-            (item) =>
-              item.timestamp.split(" ")[0] >= subMonths(startOfMonth(now), 3) &&
-              item.timestamp.split(" ")[0] <= now
-          );
+        case "last_6_months":
+          dateRangeStart = subMonths(startOfMonth(now), 6);
+          dateRangeEnd = now;
           break;
-        case "last_6_month":
-          filteredInventories = filteredInventories.filter(
-            (item) =>
-              item.timestamp.split(" ")[0] >= subMonths(startOfMonth(now), 6) &&
-              item.timestamp.split(" ")[0] <= now
-          );
+        case "last_3_months":
+          dateRangeStart = subMonths(startOfMonth(now), 3);
+          dateRangeEnd = now;
           break;
         case "this_year":
-          filteredInventories = filteredInventories.filter(
-            (item) =>
-              item.timestamp.split(" ")[0] >= startOfYear(now) &&
-              item.timestamp.split(" ")[0] <= now
-          );
+          dateRangeStart = startOfYear(now);
+          dateRangeEnd = now;
           break;
         case "last_year":
-          filteredInventories = filteredInventories.filter(
-            (item) =>
-              item.timestamp.split(" ")[0] >= startOfYear(subYears(now, 1)) &&
-              item.timestamp.split(" ")[0] <= endOfYear(subYears(now, 1))
-          );
+          dateRangeStart = startOfYear(subYears(now, 1));
+          dateRangeEnd = endOfYear(subYears(now, 1));
           break;
         default:
+          dateRangeStart = null;
+          dateRangeEnd = null;
           break;
       }
+
+      if (dateRangeStart && dateRangeEnd) {
+        // console.log("Date range:", dateRangeStart, dateRangeEnd);
+        filteredInventories = filteredInventories.filter((item) => {
+          const itemDate = parse(
+            item.timestamp.split(" ")[0],
+            "dd-MM-yyyy",
+            new Date()
+          );
+          return itemDate >= dateRangeStart && itemDate <= dateRangeEnd;
+        });
+      }
+
+      //   console.log("After duration filter:", filteredInventories);
+
       response.json(filteredInventories);
     })
     .on("error", (error) => {
