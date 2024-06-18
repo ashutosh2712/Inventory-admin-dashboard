@@ -4,6 +4,7 @@ import Filter from "../assets/filter.png";
 import DashboardGraph from "../components/DashboardGraph";
 import DashboardTable from "../components/DashboardTable";
 import FilterData from "../components/FilterData";
+import RecentData from "../components/RecentData";
 const AdminDashboard = () => {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
 
@@ -34,43 +35,7 @@ const AdminDashboard = () => {
           <div>{isFilterVisible && <FilterData />}</div>
         </div>
       </div>
-      <div className="recentWrapper">
-        <p className="recentText">Recent Gathered Data 04/01/24</p>
-      </div>
-      <div className="dataNumberContainer">
-        <div className="databox">
-          <p className="dataBoxHeader">379</p>
-          <p className="dataBoxFooter"># New Units</p>
-        </div>
-        <div className="databox">
-          <p className="dataBoxHeader">$13,023,46</p>
-          <p className="dataBoxFooter">New MSRP</p>
-        </div>
-        <div className="databox">
-          <p className="dataBoxHeader">$52,882</p>
-          <p className="dataBoxFooter">New Avg. MSRP</p>
-        </div>
-        <div className="databox">
-          <p className="dataBoxHeader">67</p>
-          <p className="dataBoxFooter"># Used Units</p>
-        </div>
-        <div className="databox">
-          <p className="dataBoxHeader">$1,576,456</p>
-          <p className="dataBoxFooter">Used MSRP</p>
-        </div>
-        <div className="databox">
-          <p className="dataBoxHeader">$23,351</p>
-          <p className="dataBoxFooter">Used Avg. MSRP</p>
-        </div>
-        <div className="databox">
-          <p className="dataBoxHeader">1</p>
-          <p className="dataBoxFooter"># CPO Units</p>
-        </div>
-        <div className="databox">
-          <p className="dataBoxHeader">$31,200</p>
-          <p className="dataBoxFooter">CPO MSRP</p>
-        </div>
-      </div>
+      <RecentData />
       <DashboardGraph />
       <DashboardTable />
     </div>

@@ -29,8 +29,10 @@ const DashboardGraph = () => {
   const [inventoryGraphData, setInventoryGraphData] = useState([]);
   const [MSRPchartGraphData, setMSRPchartGraphData] = useState([]);
   const [filteredType, setFilteredType] = useState("new");
+  const [filteredMSRPType, setFilteredMSRPType] = useState("new");
 
   const [error, setError] = useState("");
+  const [errorMSRP, setErrorMSRP] = useState("");
 
   const fetchInventoryGraphData = async () => {
     try {
@@ -64,7 +66,7 @@ const DashboardGraph = () => {
         // console.log(inventoryDataResponse.data);
       } else {
         console.error("Response is Empty");
-        setError("Response is Empty");
+        setErrorMSRP("Response is Empty");
       }
     } catch (error) {
       console.error("Error loading table data", error);
@@ -72,7 +74,7 @@ const DashboardGraph = () => {
         error.response && error.response.data && error.response.data.error
           ? error.response.data.error
           : error.message;
-      setError(errorMessage);
+      setErrorMSRP(errorMessage);
     }
   };
 
@@ -88,6 +90,13 @@ const DashboardGraph = () => {
     console.log("Filtered Data", filteredType);
   };
 
+  const handleFilterChangeMSRP = (event) => {
+    console.log("Event:", event);
+    setFilteredMSRPType(event);
+
+    console.log("Filtered Data", filteredMSRPType);
+  };
+
   const processDataForChart = () => {
     if (!inventoryGraphData) return null;
 
@@ -100,6 +109,40 @@ const DashboardGraph = () => {
     filteredData.forEach((item) => {
       Object.keys(item.inventory).forEach((type) => {
         if (filteredType && filteredType !== type) return;
+
+        if (!dataSets[type]) {
+          dataSets[type] = {
+            data: [],
+            backgroundColor: "#ff9926",
+            barThickness: 52,
+          };
+        }
+
+        dataSets[type].data.push(item.inventory[type]);
+      });
+    });
+
+    return {
+      labels,
+      datasets: Object.values(dataSets),
+    };
+  };
+
+  const processDataForMSRPChart = () => {
+    if (!MSRPchartGraphData) return null;
+
+    const filteredData = MSRPchartGraphData.filter((item) => {
+      return (
+        item.inventory[filteredMSRPType] && item.inventory[filteredMSRPType] > 0
+      );
+    });
+
+    const labels = filteredData.map((item) => item.date);
+    const dataSets = {};
+
+    filteredData.forEach((item) => {
+      Object.keys(item.inventory).forEach((type) => {
+        if (filteredMSRPType && filteredMSRPType !== type) return;
 
         if (!dataSets[type]) {
           dataSets[type] = {
@@ -137,6 +180,7 @@ const DashboardGraph = () => {
 
   // const chartDataProcessed = processInventoryChartData();
   const chartDataProcessed = processDataForChart();
+  const chartMSRPDataProcessed = processDataForMSRPChart();
   return (
     <div className="dashboardGraphContainer">
       <div className="inventoryGraph">
@@ -177,12 +221,40 @@ const DashboardGraph = () => {
       <div className="moneyData">
         <div className="moneyDataHeader">
           <p className="graphHeaderText">Average MSRP in USD</p>
-          <button className="graphBtn btn-active">new</button>
-          <button className="graphBtn">used</button>
-          <button className="graphBtn">cpo</button>
+          <button
+            // className="graphBtn"
+            className={`graphBtn ${
+              filteredMSRPType === "new" ? "btn-active" : ""
+            }`}
+            onClick={() => handleFilterChangeMSRP("new")}
+          >
+            new
+          </button>
+          <button
+            // className="graphBtn"
+            className={`graphBtn ${
+              filteredMSRPType === "used" ? "btn-active" : ""
+            }`}
+            onClick={() => handleFilterChangeMSRP("used")}
+          >
+            used
+          </button>
+          <button
+            // className="graphBtn"
+            className={`graphBtn ${
+              filteredMSRPType === "cpo" ? "btn-active" : ""
+            }`}
+            onClick={() => handleFilterChangeMSRP("cpo")}
+          >
+            cpo
+          </button>
         </div>
         <div className="moneyDataGraphPlot">
-          <Bar options={options} data={data} />
+          {errorMSRP ? (
+            <p style={{ color: "red" }}>{error}</p>
+          ) : (
+            <Bar options={options} data={chartMSRPDataProcessed} />
+          )}
         </div>
       </div>
     </div>
